@@ -1,0 +1,83 @@
+.sidebar {
+  min-width: 250px;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for sidebar */
+}
+
+.sidebar.collapsed {
+  min-width: 80px;
+}
+
+.sidebar .dropdown-toggle::after {
+  display: none; /* Remove dropdown indicator */
+}
+
+.sidebar-header img {
+  width: 70px;
+  transition: width 0.3s;
+}
+
+.sidebar.collapsed .sidebar-header img {
+  width: 50px;
+}
+
+.sidebar.collapsed .list-unstyled.components {
+  display: none; /* Hide menu items when collapsed */
+}
+
+.sidebar .list-unstyled.components {
+  padding: 20px 0; /* Padding for menu items */
+}
+
+.sidebar .list-unstyled.components li {
+  padding: 10px 20px; /* Adjust padding for menu items */
+}
+
+.sidebar .list-unstyled.components li a {
+  display: block;
+  color: #333; /* Text color */
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .list-unstyled.components li a:hover {
+  background-color: #f0f0f0; /* Hover background color */
+  color: #007bff; /* Hover text color */
+}
+
+.sidebar .list-unstyled.components li a.active {
+  background-color: #007bff; /* Active link background color */
+  color: #ffffff; /* Active link text color */
+}
+
+.sidebar .list-unstyled.components .dropdown-toggle {
+  color: #333; /* Dropdown toggle text color */
+}
+
+.sidebar .list-unstyled.components .dropdown-toggle:hover {
+  background-color: transparent; /* Remove hover background color for dropdown toggle */
+}
+
+.sidebar .list-unstyled.components .dropdown-toggle:focus {
+  background-color: transparent; /* Remove focus background color for dropdown toggle */
+}
+
+.sidebar .list-unstyled.components .submenu {
+  list-style-type: none;
+  padding-left: 20px; /* Adjust submenu padding */
+}
+
+.sidebar .list-unstyled.components .submenu li {
+  padding: 8px 0; /* Adjust submenu item padding */
+}
+
+.sidebar .list-unstyled.components .submenu li a {
+  color: #333; /* Submenu item text color */
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .list-unstyled.components .submenu li a:hover {
+  background-color: #f0f0f0; /* Submenu item hover background color */
+  color: #007bff; /* Submenu item hover text color */
+}

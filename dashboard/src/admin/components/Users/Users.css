@@ -1,0 +1,62 @@
+/* Styles for the navbar */
+.navbar {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: right-end;
+    align-items: center;
+    background-color: #f8f9fa;
+  }
+  
+  /* Profile icon in the navbar */
+  .profile {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; /* Adjusted to ensure centering */
+  }
+  
+  .sidebar-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .sidebar-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px 0;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .sidebar-option img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+  
+  .sidebar-option button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .sidebar-option button:hover {
+    background-color: #0056b3;
+  }
+  

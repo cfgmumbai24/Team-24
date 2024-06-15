@@ -28,6 +28,21 @@
   color: #61dafb;
 }
 
+/* App.css */
+
+/* .content-container {
+  margin-left: 250px; 
+  width: calc(100% - 250px);
+  padding: 20px;
+  transition: margin-left 0.3s, width 0.3s;
+}
+
+.sidebar.collapsed + .content-container {
+  margin-left: 80px; 
+  width: calc(100% - 80px);
+} */
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
