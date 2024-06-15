@@ -1,22 +1,33 @@
 const mongoose = require("mongoose");
-const { object, string, enum: _enum, number } = require("zod");
+const { object, string, enum: zodEnum } = require("zod");
 
-const superUserZodSchema = object({
-  name: string().max(100),
-});
-
+// Define the roles for SuperUser
 const superUserRoles = ["ADMIN", "SUB-ADMIN", "CLUSTER-USER"];
 
+// Define the Zod schema
+const superUserZodSchema = object({
+  name: string().max(
+    100,
+    "Super User Name should be less than 100 characters."
+  ),
+  email: string()
+    .max(100, "Super User email should be less than 100 characters.")
+    .email("Invalid email format."),
+  hashedPassword: string().min(1, "SuperUser hashedPassword missing."),
+  role: zodEnum(superUserRoles).default("CLUSTER-USER"),
+});
+
+// Define the Mongoose schema
 const superUserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      maxLen: [100, "Super User Name should be less than 100 characters."],
+      maxLength: [100, "Super User Name should be less than 100 characters."],
       required: [true, "SuperUser name missing."],
     },
     email: {
       type: String,
-      maxLen: [100, "SuperUser email should be less than 100 characters."],
+      maxLength: [100, "Super User email should be less than 100 characters."],
       required: [true, "SuperUser email missing."],
     },
     hashedPassword: {
@@ -34,11 +45,13 @@ const superUserSchema = new mongoose.Schema(
   }
 );
 
+// Validation function using Zod
 const validateData = function (data) {
   return superUserZodSchema.safeParse(data);
 };
 
+// Export the Mongoose model and validation function
 module.exports = {
-  Avatar: mongoose.model("Avatar", avatarSchema),
-  validateAvatar: validateData,
+  SuperUser: mongoose.model("SuperUser", superUserSchema),
+  validateSuperUser: validateData,
 };

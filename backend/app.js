@@ -16,6 +16,10 @@ app.use(express.json());
 app.use(fileUpload());
 app.use(morgan("tiny"));
 
+const userRouter = require("./routes/user.route");
+
+app.use("/api/v1", userRouter);
+
 // Health check route
 app.get("/api/v1/health", async (req, res) => {
   return res.send("Running...");

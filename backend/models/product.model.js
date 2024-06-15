@@ -40,7 +40,7 @@ const ProductSchema = new mongoose.Schema(
       required: [true, "Status is required."],
       default: "CREATED",
     },
-    qty: {
+    quantity: {
       type: Number,
       required: [true, "Quantity is required."],
       min: [0, "Quantity cannot be negative."],
@@ -64,7 +64,7 @@ const productZodSchema = z.object({
     message: "Invalid category ID.",
   }),
   status: z.enum(productStatusEnum).default("CREATED"),
-  qty: z
+  quantity: z
     .number()
     .nonnegative("Quantity cannot be negative.")
     .int()
