@@ -91,3 +91,48 @@ exports.updateUser = async (req, res) => {
     return new HTTPError(res, 500, error, "Internal server error");
   }
 };
+
+exports.signin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find the user by email
+    const user = await User.findOne({ email }).select("+hashedPassword");
+    if (!user) {
+      return HTTPError(
+        res,
+        401,
+        "Authentication failed",
+        "Invalid email or password."
+      );
+    }
+
+    // Check if the password matches
+    const isPasswordValid = await bcrypt.compare(password, user.hashedPassword);
+    if (!isPasswordValid) {
+      return HTTPError(
+        res,
+        401,
+        "Authentication failed",
+        "Invalid email or password."
+      );
+    }
+
+    // Generate JWT token or any session management logic here
+    // For example, generate JWT token:
+    // const token = generateJWTToken(user); // Implement your own token generation logic
+
+    // Respond with success
+    return HTTPResponse(
+      res,
+      true,
+      200,
+      "Authentication successful!",
+      null,
+      { user }
+    );
+  } catch (error) {
+    console.error("Signin error:", error);
+    return HTTPError(res, 500, "Internal server error", error.message);
+  }
+};
