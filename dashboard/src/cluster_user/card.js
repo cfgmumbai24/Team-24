@@ -1,14 +1,22 @@
-import React from 'react';
-import logo from '../logo.png';
+import React from "react";
+import logo from "../logo.png";
 
-const Card = ({card}) => {
+const Card = ({ card }) => {
+  console.log(card);
   return (
     <div className="card" style={{ width: 360, margin: 10 }}>
-      <img src={logo} className="card-img-top" alt="terracota" />
+      <img
+        src={card.product.imgLink}
+        className="card-img-top"
+        alt="terracota"
+      />
       <div className="card-body">
         <h5 className="card-title">{card.title}</h5>
         <p className="card-text">{card.description}</p>
-        <div className="approval-status" style={{ color: 'green', fontWeight: 'bold' }}>
+        <div
+          className="approval-status"
+          style={{ color: "green", fontWeight: "bold" }}
+        >
           {card.status}
         </div>
       </div>
