@@ -6,15 +6,14 @@ const { default: mongoose } = require("mongoose");
 
 exports.isLoggedInSuperUser = async (req, res, next) => {
   try {
+    console.log(req.cookies);
     // if no token is sent
     if (!("token" in req.cookies) && !("authorization" in req.headers)) {
-      return next(
-        new HTTPError(
-          res,
-          401,
-          "Login to access this resource",
-          "Unauthorized client error"
-        )
+      return new HTTPError(
+        res,
+        401,
+        "Login to access this resource",
+        "Unauthorized client error"
       );
     }
 
@@ -33,6 +32,8 @@ exports.isLoggedInSuperUser = async (req, res, next) => {
 
     // add user to request object for further use
     req.superUser = superUser;
+
+    console.log("isLoggedInSuperUser");
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

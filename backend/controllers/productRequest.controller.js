@@ -53,6 +53,7 @@ exports.createProductRequestByClusterUser = async (req, res) => {
       product: product._id,
       remark: remark,
       mode: mode,
+      user: req.superUser._id,
     });
 
     return new HTTPResponse(
@@ -64,7 +65,7 @@ exports.createProductRequestByClusterUser = async (req, res) => {
       { productRequest: newProductRequest }
     );
   } catch (error) {
-    console.error(error);
+    console.error("createProductRequestByClusterUser:", error);
     return new HTTPError(res, 500, error.message, "Internal server error");
   }
 };
