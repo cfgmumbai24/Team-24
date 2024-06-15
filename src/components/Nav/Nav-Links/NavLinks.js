@@ -6,12 +6,12 @@ const NavLinks = () => {
             <nav className="nav__bottom__container">
                 <div className="bottom__container">
                     <ul className="nav">
-                        <li className='nav-link'><Link to="/">Home</Link></li> 
-                        <li className='nav-link'><Link to="/category/teracotta_ornaments">Teracotta Ornaments</Link></li> 
-                        <li className='nav-link'><Link to="/category/macrame_handicraft">Macrame Andicraft</Link></li> 
-                        <li className='nav-link'><Link to="/category/moonj_handicraft">Moonj Handicraft</Link></li>
-                        <li className='nav-link'><Link to="/category/banana_fiber">Banana Fiber</Link></li>
-                        <li className='nav-link'><Link to="/category/jute_products">Jute Products</Link></li>
+                    <li className='nav-link'><Link to="/">Home</Link></li> 
+                        <li className='nav-link'><Link to="/category/teracotta">Teracotta</Link></li> 
+                        <li className='nav-link'><Link to="/category/macrame">Macrame </Link></li> 
+                        <li className='nav-link'><Link to="/category/moonj">Moonj</Link></li>
+                        <li className='nav-link'><Link to="/category/banana">Banana</Link></li>
+                        <li className='nav-link'><Link to="/category/jute">Jute</Link></li>
                     </ul>
                 </div>
             </nav>

@@ -33,9 +33,16 @@ a:hover {
 
 .bottom__container {
     margin: auto;
+    border: 1px solid black;
     display: flex;
     align-items: center;
-    flex-direction: row
+    flex-direction: row;
+    border-radius: 10px; /* Adds rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for background color change */
+}
+
+.bottom__container:hover {
+    background-color: #FFE26E;; /* Changes background color on hover */
 }
 
 .container .nav-link {
