@@ -9,7 +9,7 @@ const userZodSchema = object({
   email: string()
     .email("Invalid email address.")
     .nonempty("Email is required."),
-  password: string().nonempty("Password is required."),
+  hashedPassword: string().nonempty("Password is required."),
   contact: string().nonempty("Contact is required."),
   address: string().optional(),
 });
@@ -27,9 +27,10 @@ const UserSchema = new mongoose.Schema(
       required: [true, "Email is required."],
       unique: true,
     },
-    password: {
+    hashedPassword: {
       type: String,
       required: [true, "Password is required."],
+      select: false,
     },
     contact: {
       type: String,
