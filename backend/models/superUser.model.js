@@ -33,6 +33,7 @@ const superUserSchema = new mongoose.Schema(
       type: String,
       maxLength: [100, "Super User email should be less than 100 characters."],
       required: [true, "SuperUser email missing."],
+      unique: true, // Ensure email uniqueness
     },
     hashedPassword: {
       type: String,
