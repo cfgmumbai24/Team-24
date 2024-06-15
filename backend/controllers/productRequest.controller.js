@@ -90,7 +90,9 @@ exports.getAllProductRequestForClusterUser = async (req, res) => {
   try {
     const requests = await ProductRequest.find({
       user: req.superUser._id,
-    }).sort({ createdAt: -1 });
+    })
+      .populate("product")
+      .sort({ createdAt: -1 });
 
     return new HTTPResponse(res, true, 200, null, null, {
       requests,
@@ -105,13 +107,100 @@ exports.getAllProductRequestForSubAdmin = async (req, res) => {
   try {
     const requests = await ProductRequest.find({
       status: productRequestStatusEnum.CREATED,
-    }).sort({ createdAt: -1 });
+    })
+      .product("product")
+      .sort({ createdAt: -1 });
 
     return new HTTPResponse(res, true, 200, null, null, {
       requests,
     });
   } catch (error) {
     console.log("getAllProductRequestForSubAdmin: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.getAllProductRequestForAdmin = async (req, res) => {
+  try {
+    const requests = await ProductRequest.find({
+      status: productRequestStatusEnum.SUBADMIN_APPROVED,
+    })
+      .product("product")
+      .sort({ createdAt: -1 });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      requests,
+    });
+  } catch (error) {
+    console.log("getAllProductRequestForAdmin: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.approveProductRequestForSubAdmin = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const request = await ProductRequest.findByIdAndUpdate(productId, {
+      status: productRequestStatusEnum.SUBADMIN_APPROVED,
+    });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      request,
+    });
+  } catch (error) {
+    console.log("approveProductRequestForSubAdmin: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.rejectProductRequestForSubAdmin = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const request = await ProductRequest.findByIdAndUpdate(productId, {
+      status: productRequestStatusEnum.SUBADMIN_REJECTED,
+    });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      request,
+    });
+  } catch (error) {
+    console.log("rejectProductRequestForSubAdmin: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.approveProductRequestForAdmin = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const request = await ProductRequest.findByIdAndUpdate(productId, {
+      status: productRequestStatusEnum.ADMIN_APPROVED,
+    });
+
+    await Product.findByIdAndUpdate(request.product._id, {
+      isLive: true,
+    });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      request,
+    });
+  } catch (error) {
+    console.log("approveProductRequestForAdmin: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.rejectProductRequestForAdmin = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const request = await ProductRequest.findByIdAndUpdate(productId, {
+      status: productRequestStatusEnum.ADMIN_REJECTED,
+    });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      request,
+    });
+  } catch (error) {
+    console.log("approveProductRequestForAdmin: ", error);
     return new HTTPError(res, 500, error.message, error);
   }
 };

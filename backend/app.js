@@ -22,11 +22,13 @@ const userRouter = require("./routes/user.route");
 const productRequestRouter = require("./routes/productRequest.route");
 const categoryRouter = require("./routes/category.route");
 const superUserRouter = require("./routes/superUser.route");
+const productRouter = require("./routes/product.route");
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product-request", productRequestRouter);
 app.use("/api/v1/category", categoryRouter);
 app.use("/api/v1/super-user", superUserRouter);
+app.use("/api/v1/product", productRouter);
 
 // Health check route
 app.get("/api/v1/health", async (req, res) => {

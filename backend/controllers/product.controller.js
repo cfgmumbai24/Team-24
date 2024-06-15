@@ -7,7 +7,7 @@ exports.updateProduct = async (req, res) => {
     const productId = req.params.id;
 
     // Validate data using Zod
-    const validationResult = validateUpdateProduct(data);
+    const validationResult = validateUpdateProduct(req.body);
     if (!validationResult.success) {
       return new HTTPError(
         res,
@@ -34,6 +34,10 @@ exports.updateProduct = async (req, res) => {
         "resource not found"
       );
     }
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      product: existingProduct,
+    });
   } catch (error) {
     console.log("updateProduct: ", error);
     return new HTTPError(res, 500, error.message, error);
