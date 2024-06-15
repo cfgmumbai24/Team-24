@@ -50,8 +50,17 @@ const validateData = function (data) {
   return userZodSchema.safeParse(data);
 };
 
+const updateUserZodSchema = object({
+  name: string()
+    .max(100, "Username should be less than 100 characters.")
+    .nonempty("Username missing."),
+  contact: string().nonempty("Contact is required."),
+  address: string().optional(),
+});
+
 // Export the Mongoose model and validation function
 module.exports = {
   User: mongoose.model("User", UserSchema),
   validateUser: validateData,
+  updateUserZodSchema,
 };
