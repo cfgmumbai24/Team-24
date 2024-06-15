@@ -48,8 +48,7 @@ exports.sendInquiryEmail = async (req, res) => {
         ${products.map(product => `
           <li>
             <strong>${product.name}</strong><br>
-            Quantity: ${product.quantity}<br>
-            Price: $${product.price.toFixed(2)}
+            Quantity: ${product.quantity}<br>}
           </li>
         `).join('')}
       </ul>

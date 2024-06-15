@@ -1,60 +1,86 @@
-const mongoose = require("mongoose");
-const { object, string, array, number, nullable } = require("zod");
+// controllers/inquiry.controller.js
+const { InquiryRequest, validateInquiryRequest } = require("../models/inquiryRequest.model");
+const HTTPError = require("../utils/HTTPError");
+const HTTPResponse = require("../utils/HTTPResponse");
+const Resend = require('@resend/node');
+const { User } = require("../models/user.model");
+const { Product } = require("../models/product.model");
 
-// Define the Zod schema
-const inquiryRequestZodSchema = object({
-  userId: string().refine((id) => mongoose.Types.ObjectId.isValid(id), {
-    message: "Invalid user ID",
-  }),
-  productIds: array(
-    object({
-      productId: string().refine((id) => mongoose.Types.ObjectId.isValid(id), {
-        message: "Invalid product ID",
-      }),
-      qty: number()
-        .int()
-        .positive({ message: "Quantity must be a positive integer" }),
-    })
-  ),
-  poc: nullable(
-    string().refine((id) => mongoose.Types.ObjectId.isValid(id), {
-      message: "Invalid point of contact user ID",
-    })
-  ),
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Define the Mongoose schema
-const InquiryRequestSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    productIds: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
-        qty: { type: Number, required: true, min: 1 },
-      },
-    ],
-    poc: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
-  },
-  {
-    timestamps: true,
+exports.storeAndSendInquiry = async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Validate the incoming data using Zod
+    const validationResult = validateInquiryRequest(data);
+    if (!validationResult.success) {
+      return HTTPError(
+        res,
+        400,
+        "Field validation failed!",
+        validationResult.error.flatten().fieldErrors
+      );
+    }
+
+    // Create the inquiry in the database
+    const inquiryRequest = await InquiryRequest.create({
+      userId: req.user._id,
+      productIds: data.productIds,
+      poc: data.poc,
+    });
+
+    // Populate user and product details for the email
+    const user = await User.findById(req.user._id).lean();
+    if (!user) {
+      return HTTPError(res, 404, "User not found", "No user with the given ID exists.");
+    }
+
+    const products = [];
+    for (const item of data.productIds) {
+      const product = await Product.findById(item.productId).lean();
+      if (!product) {
+        return HTTPError(res, 404, "Product not found", `No product with the given ID: ${item.productId} exists.`);
+      }
+      products.push({ name: product.name, quantity: item.qty, price: product.price });
+    }
+
+    const emailContent = `
+      <h1>Inquiry Request Details</h1>
+      <p><strong>User:</strong> ${user.name} (${user.email})</p>
+      <p><strong>Contact:</strong> ${user.contact}</p>
+      <p><strong>Address:</strong> ${user.address || "N/A"}</p>
+      <h2>Products</h2>
+      <ul>
+        ${products.map(product => `
+          <li>
+            <strong>${product.name}</strong><br>
+            Quantity: ${product.quantity}<br>
+            Price: $${product.price.toFixed(2)}
+          </li>
+        `).join('')}
+      </ul>
+    `;
+
+    // Send the email using Resend
+    await resend.sendEmail({
+      from: 'noreply@example.com', // Change to your sending email
+      to: data.recipientEmail,
+      subject: 'Inquiry Request Details',
+      html: emailContent,
+    });
+
+    // Respond with a success message
+    return HTTPResponse(
+      res,
+      true,
+      201,
+      "Inquiry created and email sent successfully!",
+      null,
+      { inquiryRequest }
+    );
+  } catch (error) {
+    console.error("Error processing inquiry request:", error);
+    return HTTPError(res, 500, "Internal server error", error.message);
   }
-);
-
-// Validation function using Zod
-const validateData = function (data) {
-  return inquiryRequestZodSchema.safeParse(data);
-};
-
-// Export the Mongoose model and validation function
-module.exports = {
-  InquiryRequest: mongoose.model("InquiryRequest", InquiryRequestSchema),
-  validateInquiryRequest: validateData,
 };
