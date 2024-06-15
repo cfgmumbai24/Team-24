@@ -3,6 +3,7 @@ const { Product } = require("../models/product.model");
 const {
   ProductRequest,
   productRequestModes,
+  productRequestStatusEnum,
 } = require("../models/productRequest.model");
 const HTTPError = require("../utils/HTTPError");
 const HTTPResponse = require("../utils/HTTPResponse");
@@ -10,6 +11,7 @@ const bcrypt = require("bcryptjs");
 const sharp = require("sharp");
 const config = require("../config/config.js");
 const uploadToS3 = require("../utils/uploadToS3");
+const Jimp = require("jimp");
 
 // TODO: add auth and req.user accesss
 exports.createProductRequestByClusterUser = async (req, res) => {
@@ -44,7 +46,8 @@ exports.createProductRequestByClusterUser = async (req, res) => {
 
     if (!productFound && req.files && req.files.image) {
       const image = req.files.image;
-      result = await storeProductImage(product, image);
+      // result = await storeProductImage(product, image);
+      result = await storeProductImageUsingJimp(product, image);
       imageUrl = result.secure_url;
     }
 
@@ -53,6 +56,7 @@ exports.createProductRequestByClusterUser = async (req, res) => {
       product: product._id,
       remark: remark,
       mode: mode,
+      user: req.superUser._id,
     });
 
     return new HTTPResponse(
@@ -64,14 +68,73 @@ exports.createProductRequestByClusterUser = async (req, res) => {
       { productRequest: newProductRequest }
     );
   } catch (error) {
-    console.error(error);
+    console.error("createProductRequestByClusterUser:", error);
     return new HTTPError(res, 500, error.message, "Internal server error");
+  }
+};
+
+exports.getAllProductRequest = async (req, res) => {
+  try {
+    const requests = await ProductRequest.find().sort({ createdAt: -1 });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      requests,
+    });
+  } catch (error) {
+    console.log("getAllProductRequest: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.getAllProductRequestForClusterUser = async (req, res) => {
+  try {
+    const requests = await ProductRequest.find({
+      user: req.superUser._id,
+    }).sort({ createdAt: -1 });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      requests,
+    });
+  } catch (error) {
+    console.log("getAllProductRequestForClusterUser: ", error);
+    return new HTTPError(res, 500, error.message, error);
+  }
+};
+
+exports.getAllProductRequestForSubAdmin = async (req, res) => {
+  try {
+    const requests = await ProductRequest.find({
+      status: productRequestStatusEnum.CREATED,
+    }).sort({ createdAt: -1 });
+
+    return new HTTPResponse(res, true, 200, null, null, {
+      requests,
+    });
+  } catch (error) {
+    console.log("getAllProductRequestForSubAdmin: ", error);
+    return new HTTPError(res, 500, error.message, error);
   }
 };
 
 const storeProductImage = async (product, image) => {
   try {
     const convertedBuffer = await sharp(image.data).toFormat("webp").toBuffer();
+    let data = await uploadToS3(
+      "cfg-products",
+      product._id + ".webp", // converting to webp since optimized for web
+      convertedBuffer
+    );
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const storeProductImageUsingJimp = async (product, image) => {
+  try {
+    const jimpImage = await Jimp.read(image.data);
+    const convertedBuffer = await jimpImage.getBufferAsync(Jimp.MIME_WEBP);
+
     let data = await uploadToS3(
       "cfg-products",
       product._id + ".webp", // converting to webp since optimized for web
