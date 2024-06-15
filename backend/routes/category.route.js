@@ -1,22 +1,18 @@
 const express = require("express");
 const {
-  getAllAvatars,
-  createAvatar,
-  getAvatarByID,
-  updateAvatarByID,
-  deleteAvatarByID,
-  updateAvatarIMGByID,
-} = require("../controllers/avatar.controller");
+   createCategory,
+   deleteCategory,
+   getCategories
+} = require("../controllers/category.controller");
 const router = express.Router();
 
-router.route("/").get(getAllAvatars).post(createAvatar);
+// Route for retrieving all categories
+router.get('/categories', getCategories);
 
-router.route("/img/:avatarID").patch(updateAvatarIMGByID);
+// Route for creating a new category
+router.post('/categories', createCategory);
 
-router
-  .route("/:avatarID")
-  .get(getAvatarByID)
-  .patch(updateAvatarByID)
-  .delete(deleteAvatarByID);
+// Route for deleting a category by ID
+router.delete('/categories/:id', deleteCategory);
 
 module.exports = router;
