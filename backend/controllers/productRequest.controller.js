@@ -8,7 +8,7 @@ const {
 const HTTPError = require("../utils/HTTPError");
 const HTTPResponse = require("../utils/HTTPResponse");
 const bcrypt = require("bcryptjs");
-// const sharp = require("sharp");
+const sharp = require("sharp");
 const config = require("../config/config.js");
 const uploadToS3 = require("../utils/uploadToS3");
 const Jimp = require("jimp");
@@ -46,9 +46,12 @@ exports.createProductRequestByClusterUser = async (req, res) => {
 
     if (!productFound && req.files && req.files.image) {
       const image = req.files.image;
-      // result = await storeProductImage(product, image);
-      result = await storeProductImageUsingJimp(product, image);
-      imageUrl = result.secure_url;
+      result = await storeProductImage(product, image);
+      console.log(result);
+      // result = await storeProductImageUsingJimp(product, image);
+      imageUrl = result.object_url;
+      product.imgLink = imageUrl;
+      await product.save();
     }
 
     // Create a new product request
