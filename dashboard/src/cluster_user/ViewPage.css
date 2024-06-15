@@ -1,0 +1,229 @@
+.App {
+    text-align: center;
+    background-color: #f8ebed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .App-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .App-logo {
+    height: 40px;
+    margin-right: 20px;
+    border-radius: 50%;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #D32F2F;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  
+  .user-name {
+    font-size: 16px;
+    color: black;
+  }
+  
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .cluster-user-menu-container {
+    height: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+  
+  .cluster-user-menu-title {
+    font-size: 24px;
+    padding-bottom: 50px;
+  }
+  
+  .cluster-user-menu {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .menu-button {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .menu-button:hover {
+    background-color: #333;
+  }
+  
+  .button-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .button-text {
+    margin-top: 10px;
+    padding: 5px 10px;
+  }
+  
+  .container {
+    max-width: 1200px;
+  }
+  
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .mt-8 {
+    margin-top: 2rem;
+  }
+  
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+  
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  
+  .justify-evenly {
+    justify-content: space-evenly;
+  }
+  
+  .card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    margin-right: 10px;
+  }
+  
+  .back-button {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #333;
+  }
+  
+  /* Media queries for responsiveness */
+  @media (max-width: 1200px) {
+    .card {
+      width: calc(33% - 20px); /* Three cards per row */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      width: calc(50% - 20px); /* Two cards per row */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .card {
+      width: 100%; /* One card per row */
+    }
+  
+    .App-header {
+      flex-direction: column;
+    }
+  
+    .App-logo {
+      margin-bottom: 10px;
+    }
+  
+    .user-info {
+      justify-content: center;
+      margin-top: 10px;
+    }
+  
+    .back-button {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  
