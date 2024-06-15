@@ -5,7 +5,7 @@ const {
 } = require("../models/user.model");
 const HTTPError = require("../utils/HTTPError");
 const HTTPResponse = require("../utils/HTTPResponse");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
   try {

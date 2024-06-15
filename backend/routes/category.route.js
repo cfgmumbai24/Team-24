@@ -1,22 +1,7 @@
 const express = require("express");
-const {
-  getAllAvatars,
-  createAvatar,
-  getAvatarByID,
-  updateAvatarByID,
-  deleteAvatarByID,
-  updateAvatarIMGByID,
-} = require("../controllers/avatar.controller");
+const { createCategory } = require("../controllers/category.controller");
 const router = express.Router();
 
-router.route("/").get(getAllAvatars).post(createAvatar);
-
-router.route("/img/:avatarID").patch(updateAvatarIMGByID);
-
-router
-  .route("/:avatarID")
-  .get(getAvatarByID)
-  .patch(updateAvatarByID)
-  .delete(deleteAvatarByID);
+router.route("/").post(createCategory);
 
 module.exports = router;

@@ -1,4 +1,3 @@
-
 const { Category, validateCategory } = require("../models/category.model");
 const HTTPError = require("../utils/HTTPError");
 const HTTPResponse = require("../utils/HTTPResponse");
@@ -22,7 +21,7 @@ exports.createCategory = async (req, res) => {
     const newCategory = await Category.create(validationResult.data);
 
     // Respond with a success message
-    return HTTPResponse(
+    return new HTTPResponse(
       res,
       true,
       201,
@@ -42,19 +41,21 @@ exports.deleteCategory = async (req, res) => {
 
     // Validate that the categoryId is a valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(categoryId)) {
-      return HTTPError(
-        res,
-        400,
-        "Invalid category ID",
-        { categoryId: "Category ID is not a valid ObjectId" }
-      );
+      return HTTPError(res, 400, "Invalid category ID", {
+        categoryId: "Category ID is not a valid ObjectId",
+      });
     }
 
     // Find and delete the category by ID
     const deletedCategory = await Category.findByIdAndDelete(categoryId);
 
     if (!deletedCategory) {
-      return HTTPError(res, 404, "Category not found", "No category with the given ID exists.");
+      return HTTPError(
+        res,
+        404,
+        "Category not found",
+        "No category with the given ID exists."
+      );
     }
 
     // Respond with a success message
@@ -71,7 +72,6 @@ exports.deleteCategory = async (req, res) => {
     return HTTPError(res, 500, "Internal server error", error.message);
   }
 };
-
 
 exports.getCategories = async (req, res) => {
   try {

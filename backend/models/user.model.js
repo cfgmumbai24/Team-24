@@ -50,8 +50,6 @@ const validateData = function (data) {
   return userZodSchema.safeParse(data);
 };
 
-const { object, string } = require("zod");
-
 const updateUserZodSchema = object({
   name: string()
     .max(100, "Username should be less than 100 characters.")

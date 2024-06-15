@@ -12,38 +12,31 @@ const productStatusEnum = [
 // Define the Mongoose schema
 const ProductSchema = new mongoose.Schema(
   {
-    sku: {
-      type: String,
-      required: [true, "SKU is required."],
-      unique: true,
-    },
+    // _id is the sku
     title: {
       type: String,
       required: [true, "Title is required."],
     },
     imgLink: {
       type: String,
-      required: [true, "Image link is required."],
     },
     description: {
       type: String,
       required: [true, "Description is required."],
     },
     category: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
       required: [true, "Category is required."],
     },
-    status: {
-      type: String,
-      enum: productStatusEnum,
-      required: [true, "Status is required."],
-      default: "CREATED",
+    isLive: {
+      type: Boolean,
+      default: false,
     },
     quantity: {
       type: Number,
       required: [true, "Quantity is required."],
-      min: [0, "Quantity cannot be negative."],
+      default: 0,
     },
   },
   {
@@ -64,11 +57,7 @@ const productZodSchema = z.object({
     message: "Invalid category ID.",
   }),
   status: z.enum(productStatusEnum).default("CREATED"),
-  quantity: z
-    .number()
-    .nonnegative("Quantity cannot be negative.")
-    .int()
-    .nonempty("Quantity is required."),
+  quantity: z.number(),
 });
 
 // Validation function using Zod

@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const { object, string, enum: zodEnum } = require("zod");
 
 // Define the roles for SuperUser
-const superUserRoles = ["ADMIN", "SUB-ADMIN", "CLUSTER-USER"];
+const superUserRoles = {
+  ADMIN: "ADMIN",
+  SUB_ADMIN: "SUB_ADMIN",
+  CLUSTER_USER: "CLUSTER_USER",
+};
 
 // Define the Zod schema
 const superUserZodSchema = object({
@@ -14,7 +18,7 @@ const superUserZodSchema = object({
     .max(100, "Super User email should be less than 100 characters.")
     .email("Invalid email format."),
   hashedPassword: string().min(1, "SuperUser hashedPassword missing."),
-  role: zodEnum(superUserRoles).default("CLUSTER-USER"),
+  role: zodEnum(Object.keys(superUserRoles)).default("CLUSTER-USER"),
 });
 
 // Define the Mongoose schema
@@ -36,8 +40,8 @@ const superUserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: superUserRoles,
-      default: "CLUSTER-USER",
+      enum: Object.keys(superUserRoles),
+      default: superUserRoles.CLUSTER_USER,
     },
   },
   {
@@ -54,4 +58,5 @@ const validateData = function (data) {
 module.exports = {
   SuperUser: mongoose.model("SuperUser", superUserSchema),
   validateSuperUser: validateData,
+  superUserRoles,
 };
