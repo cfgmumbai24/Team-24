@@ -60,13 +60,28 @@ const productZodSchema = z.object({
   quantity: z.number(),
 });
 
+const productUpdateZodSchema = z.object({
+  title: z.string().nonempty("Title is required."),
+  description: z.string().nonempty("Description is required."),
+  category: z
+    .string()
+    .refine((value) => mongoose.Types.ObjectId.isValid(value), {
+      message: "Invalid category ID.",
+    }),
+});
+
 // Validation function using Zod
 const validateProduct = (data) => {
   return productZodSchema.safeParse(data);
+};
+
+const validateUpdateProduct = (data) => {
+  return productUpdateZodSchema.safeParse(data);
 };
 
 // Export the Mongoose model, Zod schema, and validation function
 module.exports = {
   Product: mongoose.model("Product", ProductSchema),
   validateProduct,
+  validateUpdateProduct,
 };

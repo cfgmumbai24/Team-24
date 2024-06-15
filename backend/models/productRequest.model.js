@@ -64,4 +64,5 @@ module.exports = {
   ProductRequest: mongoose.model("ProductRequest", ProductRequestSchema),
   validateData,
   productRequestModes,
+  productRequestStatusEnum,
 };

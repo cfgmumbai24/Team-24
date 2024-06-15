@@ -1,19 +1,24 @@
 const express = require("express");
 const {
-   createUser,
-   deleteSuperUser,
-   getSuperUsers
+  createSuperUser,
+  deleteSuperUser,
+  getSuperUsers,
+  login,
+  logout,
 } = require("../controllers/superUser.controller");
+const { isLoggedInSuperUser, checkRole } = require("../middlewares/user");
+const { superUserRoles } = require("../models/superUser.model");
 
 const router = express.Router();
 
 // Route for retrieving all sub-admins (super users)
-router.get('/sub-admins', getSuperUsers);
+router
+  .route("/")
+  .get(getSuperUsers)
+  .post(isLoggedInSuperUser, checkRole(superUserRoles.ADMIN), createSuperUser);
+router.route("/:id").delete(deleteSuperUser);
 
-// Route for creating a new sub-admin (super user)
-router.post('/sub-admins', createUser);
-
-// Route for deleting a sub-admin (super user) by ID
-router.delete('/sub-admins/:id', deleteSuperUser);
+router.route("/login").post(login);
+router.route("/logout").get(logout);
 
 module.exports = router;

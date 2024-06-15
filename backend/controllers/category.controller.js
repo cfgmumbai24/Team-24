@@ -76,10 +76,10 @@ exports.deleteCategory = async (req, res) => {
 exports.getCategories = async (req, res) => {
   try {
     // Retrieve all categories
-    const categories = await Category.find();
+    const categories = await Category.find().sort({ name: 1 });
 
     // Respond with the list of categories
-    return HTTPResponse(
+    return new HTTPResponse(
       res,
       true,
       200,

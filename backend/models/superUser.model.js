@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { object, string, enum: zodEnum } = require("zod");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET, JWT_EXPIRY } = require("../config/config");
 
 // Define the roles for SuperUser
 const superUserRoles = {
@@ -17,7 +19,6 @@ const superUserZodSchema = object({
   email: string()
     .max(100, "Super User email should be less than 100 characters.")
     .email("Invalid email format."),
-  hashedPassword: string().min(1, "SuperUser hashedPassword missing."),
   role: zodEnum(Object.keys(superUserRoles)).default("CLUSTER-USER"),
 });
 
@@ -31,7 +32,7 @@ const superUserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      maxlength: [100, "SuperUser email should be less than 100 characters."],
+      maxLength: [100, "Super User email should be less than 100 characters."],
       required: [true, "SuperUser email missing."],
       unique: true, // Ensure email uniqueness
     },
@@ -50,6 +51,12 @@ const superUserSchema = new mongoose.Schema(
   }
 );
 
+superUserSchema.methods.getJWTToken = function () {
+  return jwt.sign({ id: this._id }, JWT_SECRET, {
+    expiresIn: JWT_EXPIRY,
+  });
+};
+
 // Validation function using Zod
 const validateData = function (data) {
   return superUserZodSchema.safeParse(data);
@@ -59,4 +66,5 @@ const validateData = function (data) {
 module.exports = {
   SuperUser: mongoose.model("SuperUser", superUserSchema),
   validateData,
+  superUserRoles,
 };
