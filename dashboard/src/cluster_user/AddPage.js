@@ -70,7 +70,7 @@ function AddPage() {
         <h2>Add Product</h2>
         <form className="view-product-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="model-used">Model Used *</label>
+            <label htmlFor="model-used">Category *</label>
             <select id="model-used">
               {categories.map(category => (
                 <option key={category._id} value={category._id}>{category.name}</option>
@@ -82,7 +82,7 @@ function AddPage() {
             <input type="file" id="upload-product" name='image' onChange={handleImageChange} />
           </div>
           <div className="form-group">
-            <label htmlFor="product-remarks">Product Remarks</label>
+            <label htmlFor="product-remarks">Product Description</label>
             <input type="text" id="product-remarks" />
           </div>
           <div className="form-group">
