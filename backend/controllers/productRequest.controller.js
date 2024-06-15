@@ -8,7 +8,7 @@ const {
 const HTTPError = require("../utils/HTTPError");
 const HTTPResponse = require("../utils/HTTPResponse");
 const bcrypt = require("bcryptjs");
-const sharp = require("sharp");
+// const sharp = require("sharp");
 const config = require("../config/config.js");
 const uploadToS3 = require("../utils/uploadToS3");
 const Jimp = require("jimp");

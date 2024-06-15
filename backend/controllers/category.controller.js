@@ -79,7 +79,7 @@ exports.getCategories = async (req, res) => {
     const categories = await Category.find().sort({ name: 1 });
 
     // Respond with the list of categories
-    return HTTPResponse(
+    return new HTTPResponse(
       res,
       true,
       200,
