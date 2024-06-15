@@ -1,22 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ViewPage.css';
 import logo from '../logo.png';
 import Card from './card';
+import { useState } from 'react';
+import config from '../config/config';
+import axios from 'axios';
+import { toast } from 'react-toastify';
  // Assuming you have the terracota image in your assets
 
 function ViewUserPage() {
   
-    const data = [
-        {title: "Hello", description: "text", status: "SOMETHING"},
-        {title: "Hello", description: "text", status: "SOMETHING"},
-        {title: "Hello", description: "text", status: "SOMETHING"},
-    ]
+    const [requests, setRequests] = useState([]);
+    useEffect(()=>{axios.get(`${config.BACKEND_URL}/product-request/cluster-user`,{
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    }).then(response=>{
+      setRequests(response.data.data.requests)
+      }).catch(error =>{
+        toast("enter valid credentials");
+        console.log(error);
+      })
+    }, []);
+    
+
 
     const navigate = useNavigate();
 
   const navigateToHomePage = () => {
-    navigate('/');
+    navigate('/page');
   };
   return (
     <div className="App">
@@ -36,14 +49,13 @@ function ViewUserPage() {
       {/* <div>
         <h1>Admin Dashboard</h1>
       </div> */}
-      {data.map(d => {
-          return <Card card={d}/>
-
+      {requests.map(r => {
+          return <Card key={r._id} card={r}/>
       }
       )}
-      <button className="back-button" onClick={navigateToHomePage}>Go Back</button>
       
     </div>
+    <button className="back-button" onClick={navigateToHomePage}>Go Back</button>
       </main>
     </div>
   );
