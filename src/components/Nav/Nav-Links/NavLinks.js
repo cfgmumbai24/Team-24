@@ -7,10 +7,11 @@ const NavLinks = () => {
                 <div className="bottom__container">
                     <ul className="nav">
                         <li className='nav-link'><Link to="/">Home</Link></li> 
-                        <li className='nav-link'><Link to="/shop">Shop</Link> </li>
-                        <li className='nav-link'><Link to="/category/men">Men</Link></li> 
-                        <li className='nav-link'><Link to="/category/women">Women</Link></li> 
-                        <li className='nav-link'><Link to="/category/kids">Kids</Link></li>
+                        <li className='nav-link'><Link to="/category/teracotta_ornaments">Teracotta Ornaments</Link></li> 
+                        <li className='nav-link'><Link to="/category/macrame_handicraft">Macrame Andicraft</Link></li> 
+                        <li className='nav-link'><Link to="/category/moonj_handicraft">Moonj Handicraft</Link></li>
+                        <li className='nav-link'><Link to="/category/banana_fiber">Banana Fiber</Link></li>
+                        <li className='nav-link'><Link to="/category/jute_products">Jute Products</Link></li>
                     </ul>
                 </div>
             </nav>

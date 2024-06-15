@@ -38,9 +38,9 @@ const ItemCard = (props) => {
                     <div className="product__description">
                         <span>{props.item.description}</span>
                     </div>
-                    <div className="product__price">
+                    {/* <div className="product__price">
                         <span>${props.item.price}</span>
-                    </div>
+                    </div> */}
                     <div className="product__card__action">
                         <IconButton onClick={handleAddToWishList} sx={ {borderRadius: '20px', width: '40px', height: '40px', /* borderWidth: '3px', borderStyle: 'solid', borderColor: '#FFE26E' */ }  }>
                             <FavoriteBorderIcon sx={{width: '22px', height: '22px', color: 'black'}}/>
