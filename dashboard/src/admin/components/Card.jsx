@@ -39,10 +39,14 @@ const Card = ({ card }) => {
   return (
     <>
       <div className="card" style={{ width: 360, marginTop: 10 }}>
-        <img src={terracota} className="card-img-top" alt="terracota" />
+        <img
+          src={card.product.imgLink}
+          className="card-img-top"
+          alt="terracota"
+        />
         <div className="card-body">
-          <h5 className="card-title">{card.title}</h5>
-          <p className="card-text">{card.description}</p>
+          <h5 className="card-title">{card.product.title}</h5>
+          <p className="card-text">{card.product.description}</p>
           <div className="d-flex justify-content-between">
             <Button
               variant="success"

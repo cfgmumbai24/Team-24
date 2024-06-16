@@ -4,9 +4,11 @@ import logo from "../../../assets/logo.png";
 import "./Sidebar.css";
 import axios from "axios";
 import config from "../../../config/config";
+import AddCategoryModal from "../AddCategoryModal";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [categories, setCategories] = useState([]);
   const location = useLocation();
 
@@ -57,35 +59,10 @@ const Sidebar = () => {
                 </li>
               );
             })}
-
-            {/* <li>
-              <Link to={`${basePath}/category/terracotta-ornaments`}>
-                Terracotta Ornaments & Home Décor
-              </Link>
-            </li>
-            <li>
-              <Link to={`${basePath}/category/macrame-based-handicraft`}>
-                Macrame Based Handicraft
-              </Link>
-            </li>
-            <li>
-              <Link to={`${basePath}/category/moonj-based-handicrafts`}>
-                Moonj Based Handicrafts
-              </Link>
-            </li>
-            <li>
-              <Link to={`${basePath}/category/banana-fiber-ornaments`}>
-                Banana Fiber based ornaments & Home Décor
-              </Link>
-            </li>
-            <li>
-              <Link to={`${basePath}/category/jute-bags`}>
-                Jute Bags & Allied Products
-              </Link>
-            </li> */}
           </ul>
         </li>
       </ul>
+      <AddCategoryModal show={showModal} onHide={() => setShowModal(false)} />
     </div>
   );
 };

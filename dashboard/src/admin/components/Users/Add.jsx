@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./Add.css";
+// import React, { useEffect, useState } from "react";
+// import "./Add.css";
 // import { assets } from "../../assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Navbar from "../../components/Navbar/Navbar";
 import DashboardTitle from "../../components/Dashboardtitle";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import { useState } from "react";
 import config from "../../../config/config";
-import { redirect, useNavigate } from "react-router-dom/dist";
 
-const Add = ({ url }) => {
+const Add = () => {
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -22,18 +22,12 @@ const Add = ({ url }) => {
     setData((data) => ({ ...data, [name]: value }));
   };
 
-  const navigate = useNavigate();
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     const response = await axios.post(
       `${config.BACKEND_URL}/super-user`,
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
+      ...data
     );
     if (response.data.success) {
       setData({
@@ -44,7 +38,6 @@ const Add = ({ url }) => {
 
       setData(false);
       toast.success(response.data.message);
-      navigate("/admin/user-list");
     } else {
       toast.error(response.data.message);
     }
@@ -88,4 +81,5 @@ const Add = ({ url }) => {
     </div>
   );
 };
+
 export default Add;
