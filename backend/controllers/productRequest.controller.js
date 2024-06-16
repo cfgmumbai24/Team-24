@@ -111,7 +111,7 @@ exports.getAllProductRequestForSubAdmin = async (req, res) => {
     const requests = await ProductRequest.find({
       status: productRequestStatusEnum.CREATED,
     })
-      .product("product")
+      .populate("product")
       .sort({ createdAt: -1 });
 
     return new HTTPResponse(res, true, 200, null, null, {
@@ -128,7 +128,7 @@ exports.getAllProductRequestForAdmin = async (req, res) => {
     const requests = await ProductRequest.find({
       status: productRequestStatusEnum.SUBADMIN_APPROVED,
     })
-      .product("product")
+      .populate("product")
       .sort({ createdAt: -1 });
 
     return new HTTPResponse(res, true, 200, null, null, {

@@ -74,7 +74,7 @@ exports.login = async (req, res) => {
     }
 
     const existingUser = await SuperUser.findOne({ email: email }).select(
-      "hashedPassword"
+      "hashedPassword role"
     );
     if (!existingUser) {
       return new HTTPError(
@@ -157,11 +157,18 @@ exports.getSuperUsers = async (req, res) => {
     const superUsers = await SuperUser.find();
 
     // Respond with the list of super users
-    return HTTPResponse(res, true, 200, "Users retrieved successfully!", null, {
-      users: superUsers,
-    });
+    return new HTTPResponse(
+      res,
+      true,
+      200,
+      "Users retrieved successfully!",
+      null,
+      {
+        users: superUsers,
+      }
+    );
   } catch (error) {
     console.error("Error retrieving users:", error);
-    return HTTPError(res, 500, "Internal server error", error.message);
+    return new HTTPError(res, 500, "Internal server error", error.message);
   }
 };
