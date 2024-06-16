@@ -19,7 +19,6 @@ function AddPage() {
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!image) {

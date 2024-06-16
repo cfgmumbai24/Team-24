@@ -1,5 +1,9 @@
 import React from "react";
+<<<<<<< HEAD
 import logo from "./logo.png";
+=======
+import logo from "../logo.png";
+>>>>>>> origin/denil/backend
 
 const Card = ({ card }) => {
   console.log(card);
