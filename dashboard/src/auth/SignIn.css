@@ -1,0 +1,125 @@
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .App {
+    text-align: center;
+    background-color: #f8ebed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .App-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .App-logo {
+    height: 40px;
+    margin-right: 20px; /* Add margin to the right of the logo */
+    border-radius: 50%; /* Make the logo rounded */
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #D32F2F; /* The same as the red color in the image */
+    margin: 0;
+    flex: 1;
+    text-align: left;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  
+  .user-name {
+    font-size: 32px;
+    color: black;
+  }
+  
+  
+  signin-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .signin-title {
+    margin-bottom: 30px; /* Space between title and form */
+  }
+  
+  .signin-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px
+     /* Ensure it stays responsive */
+   /* Center the form horizontally */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .signin-button {
+    background-color: #d32f2f; /* Red button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .signin-button:hover {
+    background-color: #b71c1c; /* Darker shade of red on hover */
+  }
+  
+  .back-button {
+    margin-top: 20px;
+    background-color: #ff0000; /* Red button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #cc0000; /* Darker shade of red on hover */
+  }

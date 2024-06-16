@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 import "./Sidebar.css";
+import axios from "axios";
+import config from "../../../config/config";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [categories, setCategories] = useState([]);
   const location = useLocation();
 
   const basePath = location.pathname.startsWith("/subadmin")
     ? "/subadmin"
     : "/admin";
+
+  useEffect(() => {
+    axios
+      .get(`${config.BACKEND_URL}/category`)
+      .then((response) => {
+        setCategories(response.data.data.categories);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
@@ -36,7 +48,17 @@ const Sidebar = () => {
         <li>
           <span className="category-title">Categories:</span>
           <ul className="category-list">
-            <li>
+            {categories.map((c) => {
+              return (
+                <li>
+                  <Link to={`${basePath}/category/terracotta-ornaments`}>
+                    {c.name}
+                  </Link>
+                </li>
+              );
+            })}
+
+            {/* <li>
               <Link to={`${basePath}/category/terracotta-ornaments`}>
                 Terracotta Ornaments & Home Décor
               </Link>
@@ -60,7 +82,7 @@ const Sidebar = () => {
               <Link to={`${basePath}/category/jute-bags`}>
                 Jute Bags & Allied Products
               </Link>
-            </li>
+            </li> */}
           </ul>
         </li>
       </ul>

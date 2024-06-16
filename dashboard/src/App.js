@@ -17,21 +17,24 @@ import Navbar from "./admin/components/Navbar/Navbar";
 import Users from "./admin/components/Users/Users";
 import Add from "./admin/pages/Add/Add";
 import List from "./admin/pages/List/List";
+import ClusterUserPage from "./cluster_user/page";
+import AddPage from "./cluster_user/AddPage";
+import ViewPage from "./cluster_user/ViewPage";
+import SignInPage from "./auth/SignIn";
 
 const App = () => {
   return (
     <Router>
-      <div className="d-flex">
-        <Sidebar />
-        <Users />
-        <div className="flex-grow-1">
-          <DashboardTitle />
-          <div className="p-4">
-            <Routes>
-              <Route path="/subadmin" element={<Subadmin />} />
-              <Route path="/admin" element={<Home />} />
-              <Route path="/admin/approve" element={<ApprovalRequest />} />
-              <Route
+      <Routes>
+        <Route path="/" element={<SignInPage />} />
+        <Route path="/cluster-user" element={<ClusterUserPage />} />
+        <Route path="/cluster-user/add-page" element={<AddPage />} />
+        <Route path="/cluster-user/view-page" element={<ViewPage />} />
+
+        <Route path="/subadmin" element={<Subadmin />} />
+        <Route path="/admin" element={<Home />} />
+        {/* <Route path="/admin/approve" element={<ApprovalRequest />} /> */}
+        {/* <Route
                 path="/admin/category/terracotta-ornaments"
                 element={<TerracottaOrnaments />}
               />
@@ -47,10 +50,10 @@ const App = () => {
                 path="/admin/category/banana-fiber-ornaments"
                 element={<BananaFiberOrnaments />}
               />
-              <Route path="/admin/category/jute-bags" element={<JuteBags />} />
+              <Route path="/admin/category/jute-bags" element={<JuteBags />} /> */}
 
-              <Route path="/subadmin/approve" element={<ApprovalRequest />} />
-              <Route
+        {/* <Route path="/subadmin/approve" element={<ApprovalRequest />} /> */}
+        {/* <Route
                 path="/subadmin/category/terracotta-ornaments"
                 element={<TerracottaOrnaments />}
               />
@@ -69,15 +72,12 @@ const App = () => {
               <Route
                 path="/subadmin/category/jute-bags"
                 element={<JuteBags />}
-              />
-              <Route path="/edit-form" element={<Editpop />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/add" element={<Add />} />
-              <Route path="/list" element={<List />} />
-            </Routes>
-          </div>
-        </div>
-      </div>
+              /> */}
+        <Route path="/edit-form" element={<Editpop />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/user-add" element={<Add />} />
+        <Route path="/admin/user-list" element={<List />} />
+      </Routes>
     </Router>
   );
 };

@@ -1,15 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import terracota from "../../assets/terracota.webp";
+import axios from "axios";
+import config from "../../config/config";
+import { redirect, useNavigate } from "react-router-dom/dist";
 
 const Card = ({ card }) => {
   const [show, setShow] = useState(false);
   const [formValues, setFormValues] = useState({
-    name: card.title,
-    description: card.description,
-    category: "",
+    name: card.product.title,
+    description: card.product.description,
+    category: card.product.category,
   });
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${config.BACKEND_URL}/category`)
+      .then((response) => {
+        console.log(response.data.data.categories);
+        setCategories(response.data.data.categories);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -26,9 +41,9 @@ const Card = ({ card }) => {
 
   const handleDiscard = () => {
     setFormValues({
-      name: card.title,
-      description: card.description,
-      category: "",
+      name: card.product.title,
+      description: card.product.description,
+      category: card.product.category,
     });
     handleClose();
   };
@@ -36,13 +51,57 @@ const Card = ({ card }) => {
   return (
     <>
       <div className="card" style={{ width: 360, marginTop: 10 }}>
-        <img src={terracota} className="card-img-top" alt="terracota" />
+        <img
+          src={card.product.imgLink}
+          className="card-img-top"
+          alt="terracota"
+        />
         <div className="card-body">
           <h5 className="card-title">{card.title}</h5>
           <p className="card-text">{card.description}</p>
           <div className="d-flex justify-content-between">
-            <Button variant="success">Approve</Button>
-            <Button variant="danger">Reject</Button>
+            <Button
+              variant="success"
+              onClick={() => {
+                axios
+                  .get(
+                    `${config.BACKEND_URL}/product-request/sub-admin/${card._id}/approve`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  )
+                  .then(() => {
+                    redirect("/subadmin");
+                  });
+              }}
+            >
+              Approve
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                axios
+                  .get(
+                    `${config.BACKEND_URL}/product-request/sub-admin/${card._id}/reject`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  )
+                  .then(() => {
+                    redirect("/subadmin");
+                  });
+              }}
+            >
+              Reject
+            </Button>
             <Button variant="info" onClick={handleShow}>
               Edit
             </Button>
@@ -85,10 +144,11 @@ const Card = ({ card }) => {
                 value={formValues.category}
                 onChange={handleChange}
               >
-                <option value="">Select category</option>
-                <option value="category1">Category 1</option>
-                <option value="category2">Category 2</option>
-                <option value="category3">Category 3</option>
+                {categories.map((c, idx) => {
+                  <option key={idx} value={c._id}>
+                    {c.name}
+                  </option>;
+                })}
               </Form.Control>
             </Form.Group>
           </Form>

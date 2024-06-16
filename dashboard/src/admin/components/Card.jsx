@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import terracota from "../../assets/terracota.webp";
+import axios from "axios";
+import config from "../../config/config";
+import { redirect } from "react-router-dom/dist";
 
 const Card = ({ card }) => {
   const [show, setShow] = useState(false);
@@ -41,8 +44,48 @@ const Card = ({ card }) => {
           <h5 className="card-title">{card.title}</h5>
           <p className="card-text">{card.description}</p>
           <div className="d-flex justify-content-between">
-            <Button variant="success">Approve</Button>
-            <Button variant="danger">Reject</Button>
+            <Button
+              variant="success"
+              onClick={() => {
+                axios
+                  .get(
+                    `${config.BACKEND_URL}/product-request/admin/${card._id}/approve`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  )
+                  .then(() => {
+                    redirect("/admin");
+                  });
+              }}
+            >
+              Approve
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                axios
+                  .get(
+                    `${config.BACKEND_URL}/product-request/admin/${card._id}/reject`,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                          "token"
+                        )}`,
+                      },
+                    }
+                  )
+                  .then(() => {
+                    redirect("/admin");
+                  });
+              }}
+            >
+              Reject
+            </Button>
             <Button variant="info" onClick={handleShow}>
               Edit
             </Button>

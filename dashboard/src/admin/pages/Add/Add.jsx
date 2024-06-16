@@ -3,6 +3,9 @@ import "./Add.css";
 // import { assets } from "../../assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Navbar from "../../components/Navbar/Navbar";
+import DashboardTitle from "../../components/Dashboardtitle";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const Add = ({ url }) => {
   const [data, setData] = useState({
@@ -36,32 +39,40 @@ const Add = ({ url }) => {
   };
 
   return (
-    <div className="add">
-      <form className="flex-col" onSubmit={onSubmitHandler}>
-        <div className="add-product-name flex-col">
-          <p>Name</p>
-          <input
-            onChange={onChangeHandler}
-            value={data.name}
-            type="text"
-            name="name"
-            placeholder="Type here"
-          />
+    <div className="d-flex">
+      <Sidebar />
+      <div className="flex-grow-1">
+        <DashboardTitle />
+        <div className="p-4">
+          <div className="add">
+            <form className="flex-col" onSubmit={onSubmitHandler}>
+              <div className="add-product-name flex-col">
+                <p>Name</p>
+                <input
+                  onChange={onChangeHandler}
+                  value={data.name}
+                  type="text"
+                  name="name"
+                  placeholder="Type here"
+                />
+              </div>
+              <div className="add-product-description flex-col">
+                <p>Email</p>
+                <input
+                  onChange={onChangeHandler}
+                  value={data.email}
+                  name="email"
+                  placeholder="Write email here"
+                  required
+                />
+              </div>
+              <button type="submit" className="add-btn">
+                Add
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="add-product-description flex-col">
-          <p>Email</p>
-          <input
-            onChange={onChangeHandler}
-            value={data.email}
-            name="email"
-            placeholder="Write email here"
-            required
-          />
-        </div>
-        <button type="submit" className="add-btn">
-          Add
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

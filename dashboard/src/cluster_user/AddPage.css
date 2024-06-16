@@ -1,0 +1,151 @@
+/* App.css */
+.App {
+  text-align: center;
+  background-color: #f8ebed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+}
+
+.App-logo {
+  height: 40px;
+  border-radius: 50%;
+}
+
+h1 {
+  font-size: 24px;
+  color: #D32F2F;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.user-name {
+  font-size: 16px;
+  color: black;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+h2 {
+  font-size: 24px;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.view-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 60%;
+  max-width: 600px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+label {
+  font-size: 16px;
+  color: black;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #D32F2F;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #a00;
+}
+.submit-button {
+  /* Styles for submit button */
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #D32F2F;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #a00;
+}
+
+.back-button {
+  /* Existing styles */
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFFFFF; /* Light pink background color */
+  padding: 30px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Increased shadow effect */
+  z-index: 999;
+  max-width: 80%; /* Limit the maximum width of the popup */
+  text-align: center; /* Center align text */
+}
+
+.popup p {
+  font-size: 20px; /* Increased font size */
+  font-weight: bold; /* Bold text */
+  color: black; /* Black text color */
+  margin: 0; /* Remove default margin */
+}
+
