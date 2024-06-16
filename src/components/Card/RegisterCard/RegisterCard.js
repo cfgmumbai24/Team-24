@@ -16,7 +16,7 @@ const RegisterCard = () => {
 
         try {
             // Replace with your registration API URL
-            const response = await fetch('/api/v1/user/', {
+            const response = await fetch('/api/v1/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

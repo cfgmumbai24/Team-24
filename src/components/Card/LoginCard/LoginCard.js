@@ -14,7 +14,7 @@ const LoginCard = () => {
 
         try {
             // Replace with your login API URL
-            const response = await fetch('/api/v1/user/signup', {
+            const response = await fetch('/api/v1/user/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

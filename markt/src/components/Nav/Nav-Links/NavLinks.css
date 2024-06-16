@@ -1,0 +1,69 @@
+a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+a:hover {
+    color: black;
+}
+
+.nav__bottom__container a {
+    text-decoration: none;
+    color: rgb(3, 3, 3);
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav__bottom__container a:hover {
+    color: rgb(113, 113, 113);
+}
+
+.nav__bottom__container {
+    height: 70px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 100;
+    /* width: 200%; */
+    
+}
+
+.bottom__container {
+    margin: auto;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 10px; /* Adds rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for background color change */
+}
+
+.bottom__container:hover {
+    background-color: #FFE26E;; /* Changes background color on hover */
+}
+
+.container .nav-link {
+    color: black;
+}
+
+.control__small {
+    width: 50%;
+    height: auto;
+    display: none;
+}
+
+@media screen and (max-width: 780px) {
+    .nav__bottom__container{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .control__small{
+       display: flex;
+       margin: auto 10px;
+    }
+}
